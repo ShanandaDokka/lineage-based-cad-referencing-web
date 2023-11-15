@@ -1,0 +1,21 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(~fastOptJS/webpack, Some(e1423460-6486-4189-9d52-0dd687e6f74b), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(__runWatch console0, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(sbtStashOnFailure, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(__preWatch console0, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(fastOptJS/webpack, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: elodinJS / Compile / fastOptJS / webpack[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mBuilding webpack library bundles for elodin-fastopt in /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing/js/target/streams/_global/_global/_global/streams/fastOptJS-webpack-libraries[0m
+[0m[[0m[0minfo[0m] [0m[0mWriting scalajs.webpack.config.js[0m
+[0m[[0m[0minfo[0m] [0m[0mVersion: 5.24.3[0m
+[0m[[0m[0minfo[0m] [0m[0mHash: 60e4fb8ad9021dfd2225[0m
+[0m[[0m[0minfo[0m] [0m[0mTime: 548ms[0m
+[0m[[0m[0minfo[0m] [0m[0mPath: /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing/js/target/scala-3.2.1/scalajs-bundler/main[0m
+[0m[[0m[0minfo[0m] [0m[0m                    Asset       Size                Chunks[0m
+[0m[[0m[0minfo[0m] [0m[0melodin-fastopt-library.js   1.19 MiB      [elodin-fastopt][0m
+[0m[[0m[0mdebug[0m] [0m[0mGlobal IR cache stats: reused: 0 -- invalidated: 411 -- trees read: 0[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 3 s, completed Nov 8, 2023, 3:29:10 PM[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(resumeFromFailure, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(sbtPopOnFailure, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(__postWatch console0, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(__waitWatch console0, None, Some(CommandSource(console0)))[0m

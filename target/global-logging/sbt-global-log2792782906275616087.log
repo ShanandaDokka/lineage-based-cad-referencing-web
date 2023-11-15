@@ -1,0 +1,11 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(node /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing/js/target/scala-3.2.1/scalajs-bundler/main/node_modules/webpack/bin/webpack --profile --json --config /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing/js/target/scala-3.2.1/scalajs-bundler/main/scalajs.webpack.config.js, Some(f83f7dfc-ed7c-4ca8-b98f-90669410b609), Some(CommandSource(console0)))[0m
+[0m[[0m[31merror[0m] [0m[0mExpected ID character[0m
+[0m[[0m[31merror[0m] [0m[0mNot a valid command: node (similar: new, oldshell, loadp)[0m
+[0m[[0m[31merror[0m] [0m[0mExpected project ID[0m
+[0m[[0m[31merror[0m] [0m[0mExpected configuration[0m
+[0m[[0m[31merror[0m] [0m[0mExpected ':'[0m
+[0m[[0m[31merror[0m] [0m[0mExpected key[0m
+[0m[[0m[31merror[0m] [0m[0mNot a valid key: node (similar: onLoad, name, console)[0m
+[0m[[0m[31merror[0m] [0m[0mnode /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing/js/target/scala-3.2.1/scalajs-bundler/main/node_modules/webpack/bin/webpack --profile --json --config /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing/js/target/scala-3.2.1/scalajs-bundler/main/scalajs.webpack.config.js[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

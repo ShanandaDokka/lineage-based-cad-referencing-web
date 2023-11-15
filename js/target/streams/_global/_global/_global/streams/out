@@ -1,0 +1,9 @@
+[0m[[0m[0minfo[0m] [0m[0mBuilding webpack library bundles for elodin-fastopt in /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing-web/js/target/streams/_global/_global/_global/streams/fastOptJS-webpack-libraries[0m
+[0m[[0m[0minfo[0m] [0m[0mWriting scalajs.webpack.config.js[0m
+[0m[[0m[0mdebug[0m] [0m[0mCommand: node /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing-web/js/target/scala-3.2.1/scalajs-bundler/main/node_modules/webpack/bin/webpack --profile --json --config /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing-web/js/target/scala-3.2.1/scalajs-bundler/main/scalajs.webpack.config.js[0m
+[0m[[0m[0minfo[0m] [0m[0mVersion: 5.24.3[0m
+[0m[[0m[0minfo[0m] [0m[0mHash: 60e4fb8ad9021dfd2225[0m
+[0m[[0m[0minfo[0m] [0m[0mTime: 511ms[0m
+[0m[[0m[0minfo[0m] [0m[0mPath: /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing-web/js/target/scala-3.2.1/scalajs-bundler/main[0m
+[0m[[0m[0minfo[0m] [0m[0m                    Asset       Size                Chunks[0m
+[0m[[0m[0minfo[0m] [0m[0melodin-fastopt-library.js   1.19 MiB      [elodin-fastopt][0m

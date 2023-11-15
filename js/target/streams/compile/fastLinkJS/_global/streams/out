@@ -1,0 +1,25 @@
+[0m[[0m[0minfo[0m] [0m[0mFast optimizing /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing-web/js/target/scala-3.2.1/elodin-fastopt[0m
+[0m[[0m[0mdebug[0m] [0m[0mLinker: Compute reachability: 962675 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mLinker: Assemble LinkedClasses: 25316 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mLinker: 1030099 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: Batch mode: true[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: Incremental part: 236926 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: Optimizing 26768 methods.[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: Optimizer part: 2292225 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: 2540094 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mRefiner: Compute reachability: 236376 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mRefiner: Assemble LinkedClasses: 11633 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mRefiner: 261140 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mModule Splitter: Calculate Dependency Info: 1905 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mModule Splitter: Analyze Modules: 394 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mModule Splitter: Assemble Modules: 4323 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mModule Splitter: 7401 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Generate Classes: 904419 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Write trees: 19782 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: The set of dangerous global refs has changed. Going to re-generate the world.[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Generate Classes: 533864 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Write trees: 4935 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Class tree cache stats: reused: 0 -- invalidated: 5002[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Method tree cache stats: reused: 0 -- invalidated: 31018[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: 1490731 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mBasicBackend: Write result: 888682 us[0m
