@@ -1,12 +1,13 @@
 package elodin.opt
 
 import scalajs.js
-import org.scalajs.dom.{document, window, Element, MouseEvent}
+import org.scalajs.dom
+import org.scalajs.dom.{html, document, window, Element, MouseEvent}
 import org.scalajs.dom.raw.{Event, KeyboardEvent, Node}
 import typings.monaco.monaco
 import typings.monaco.monaco.editor
 import typings.monaco.{CreateEditorOptions, MinimapOptions, IColors, IThemeData}
-import org.scalajs.dom.raw.HTMLElement
+import org.scalajs.dom.raw.{CSSStyleDeclaration, HTMLElement, HTMLFormElement, HTMLInputElement}
 
 import collection.mutable.Buffer
 
@@ -102,6 +103,172 @@ object UI:
     button.listen(
       "click",
       _ => for action <- subscribers do action()
+    )
+
+  class InputButton(text: String):
+    val subscribers = collection.mutable.Buffer[() => Unit]()
+
+    def listen(callback: () => Unit): Unit =
+      subscribers += callback
+
+    val button = div("mode-button")(p / text)
+    var popupIsVisible = false
+    var popupContainer = div("example-menu")
+    var active = false
+    var programText = ""
+    var popupHtml = ""
+    var createdObject = ""
+
+    def showPopUp(editor: DynamicEditor, objectNum: Integer, onFormSubmit: () => Unit): Unit = 
+      if (text == "drawRectangle") {
+        popupHtml =
+        s"""
+          |<div style="display: flex; align-items: center;">
+          |  <form id="popupForm" style="background-color: #f4f4f4; padding: 20px; border-radius: 8px;">
+          |    <label for="x">Point X:</label>
+          |    <input type="number" id="x" name="x" placeholder="X" style="width: 40px" required><br>
+          |    <label for="y">Point Y:</label>
+          |    <input type="number" id="y" name="y" placeholder="Y" style="width: 40px" required><br>
+          |    <label for="height">Height:</label>
+          |    <input type="number" id="height" name="height" style="width: 40px" required><br>
+          |    <label for="width">Width:</label>
+          |    <input type="number" id="width" name="width" style="width: 40px" required><br>
+          |    <input type="submit" value="Submit">
+          |  </form>
+          |</div>
+          |""".stripMargin
+      } else if (text == "drawCircle") {
+          popupHtml =
+          s"""
+            |<div style="display: flex; align-items: center;">
+            |  <form id="popupForm" style="background-color: #f4f4f4; padding: 20px; border-radius: 8px;">
+            |    <label for="x">CircCen X:</label>
+            |    <input type="number" id="x" name="x" placeholder="X" style="width: 40px" required><br>
+            |    <label for="y">CircCen Y:</label>
+            |    <input type="number" id="y" name="y" placeholder="Y" style="width: 40px" required><br>
+            |    <label for="radius">Radius:</label>
+            |    <input type="number" id="radius" name="radius" style="width: 40px" required><br>
+            |    <input type="submit" value="Submit">
+            |  </form>
+            |</div>
+            |""".stripMargin
+      } else if (text == "extrude3D") {
+        popupHtml =
+        s"""
+          |<div style="display: flex; align-items: center;">
+          |  <form id="popupForm" style="background-color: #f4f4f4; padding: 20px; border-radius: 8px;">
+          |    <label for="variable">var:</label>
+          |    <input type="string" id="variable" name="variable" style="width: 40px" required><br>
+          |    <label for="length">Length:</label>
+          |    <input type="number" id="length" name="length" style="width: 40px" required><br>
+          |    <input type="submit" value="Submit">
+          |  </form>
+          |</div>
+          |""".stripMargin
+      }
+
+      popupContainer.innerHTML = popupHtml
+
+      val form = popupContainer.querySelector("#popupForm").asInstanceOf[HTMLFormElement]
+
+      if (text == "drawRectangle") {
+        form.addEventListener(
+          "submit",
+          (event: dom.Event) => {
+            event.preventDefault()
+            val xInput = form.querySelector("#x").asInstanceOf[HTMLInputElement]
+            val yInput = form.querySelector("#y").asInstanceOf[HTMLInputElement]
+            val heightInput = form.querySelector("#height").asInstanceOf[HTMLInputElement]
+            val widthInput = form.querySelector("#width").asInstanceOf[HTMLInputElement]
+
+            val x = xInput.value.toInt
+            val y = yInput.value.toInt
+            val height = heightInput.value.toInt
+            val width = widthInput.value.toInt
+
+            programText = s"r$objectNum = Rectangle(pt($x, $y), $height, $width)" + "\n" + s"draw(r$objectNum)"
+            createdObject = s"r$objectNum"
+            print("TEXT HERE " + text)
+
+            onFormSubmit()
+
+            deactivate()
+          }
+        )
+      } else if (text == "drawCircle") {
+        form.addEventListener(
+          "submit",
+          (event: dom.Event) => {
+            event.preventDefault()
+            val xInput = form.querySelector("#x").asInstanceOf[HTMLInputElement]
+            val yInput = form.querySelector("#y").asInstanceOf[HTMLInputElement]
+            val radiusInput = form.querySelector("#radius").asInstanceOf[HTMLInputElement]
+
+            val x = xInput.value.toInt
+            val y = yInput.value.toInt
+            val radius = radiusInput.value.toInt
+
+            programText = s"c$objectNum = Circle(pt($x, $y), $radius))" + "\n" + s"draw(c$objectNum)"
+            createdObject = s"c$objectNum"
+
+            onFormSubmit()
+
+            deactivate()
+          }
+        )
+      } else if (text == "extrude3D") {
+        form.addEventListener(
+          "submit",
+          (event: dom.Event) => {
+            event.preventDefault()
+            val lengthInput = form.querySelector("#length").asInstanceOf[HTMLInputElement]
+            val length = lengthInput.value.toInt
+
+            val variableInput = form.querySelector("#variable").asInstanceOf[HTMLInputElement]
+            val variable = variableInput.value.toString
+
+            programText = s"e$objectNum = Extrude3D($variable, $length)" + "\n" + s"draw(e$objectNum)"
+            createdObject = s"e$objectNum"
+
+            onFormSubmit()
+
+            deactivate()
+          }
+        )
+      }
+      
+      val buttonRect = button.getBoundingClientRect()
+      val style = popupContainer.style.asInstanceOf[CSSStyleDeclaration]
+      style.position = "absolute"
+      style.top = s"${buttonRect.bottom}px"
+      style.left = s"${buttonRect.left}px"
+    
+    def activate() =
+      document.body(popupContainer)
+      active = true
+
+    def deactivate() =
+      document.body.removeChild(popupContainer)
+      active = false
+
+    document.body.addEventListener(
+      "keydown",
+      (e: KeyboardEvent) => if e.key == "Escape" && active then deactivate()
+    )
+    button.listen(
+      "click",
+      (event: dom.MouseEvent) => {
+        event.preventDefault()
+        if (!active) {
+          activate()
+        } else {
+          deactivate()
+        }
+
+        for (action <- subscribers) {
+          action()
+        }
+      }
     )
 
   class HelpDialog():

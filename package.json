@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "live-reload": "^1.1.1",
-    "nvm": "^0.0.4"
+    "nvm": "^0.0.4",
+    "three": "^0.160.0"
   }
 }

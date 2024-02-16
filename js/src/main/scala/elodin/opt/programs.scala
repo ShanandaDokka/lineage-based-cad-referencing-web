@@ -1041,7 +1041,7 @@ c1 = Circle(circCen, holeR)
 c2 = Circle(circCen, holeR + thk)
 
 rectH = lowerOffset + thk
-r1 = Rectangle(pt(-gap/2, 0), gap, rectH)
+r1 = Rectangle(pt(-gap/2, 0), g ap, rectH)
 r2 = Rectangle(r1.bottomLeft - pt(thk,0), gap + thk*2, rectH)
 mainBase = Difference(
     Union(r2, c2), 
@@ -1126,6 +1126,11 @@ lowerCone = positionToEdge(lowerCone).translateX(-2*thk)
 geometry = Seq(main3, clamp3L, clamp3M, clamp3U, clampPin, lowerPin, midPin, lowerHex, lowerCone)
 draw(geometry.map(g => g.rotateYDeg(-90).translateX(h)),
      color(gray), stroke(black), style(translucent(0.9)))
+"""
+
+var blank = """parameters {
+  exampleParam = 1
+}
 """
 
 val quad = """parameters {

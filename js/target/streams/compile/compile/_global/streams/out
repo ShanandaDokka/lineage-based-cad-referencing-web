@@ -1,13 +1,5 @@
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shana/Desktop/Research/lineage-based-cad-referencing/js/src/main/scala/elodin/opt/main.scala:237:6 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m237 |[0m      e.preventDefault()[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m    |[0m      ^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0m      Not found: e[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0m longer explanation available when compiling with `-explain`[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shana/Desktop/Research/lineage-based-cad-referencing/js/src/main/scala/elodin/opt/main.scala:238:6 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m238 |[0m      e.stopPropagation()[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m    |[0m      ^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0m      Not found: e[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0m longer explanation available when compiling with `-explain`[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- Error: /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing-web/js/src/main/scala/elodin/opt/render3d.scala:719:15 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m719 |[0m    console.log()[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m    |[0m    ^^^^^^^^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0mmissing argument for parameter message of [33mmethod[0m [35mlog[0m in [33mtrait[0m [35mConsole[0m: (message: Any, optionalParams: Any*): Unit[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

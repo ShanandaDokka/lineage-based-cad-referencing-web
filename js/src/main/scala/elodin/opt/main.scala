@@ -20,6 +20,9 @@ object Composed:
   var renderMode: View = View2D
   var renderToggle: Option[RenderMode] = None
 
+  // for extruding
+  var countObject: Integer = 0
+
   class interpret(text: String, viewMode: View):
     renderMode = viewMode
     renderToggle.map(_.setStateNoCallback(viewMode))
@@ -159,6 +162,7 @@ object Composed:
     val empty = Seq(("----", """parameters{}""", View2D))
 
     val examples3D = Seq( // 3D test cases; impl. realistic CAD parts
+      ("blank-slate", blank, View3D),
       ("3d-clamp", clampPin, View3D),
       ("3d-gear", gear, View3D),
       ("3d-pivot", stackedPlates, View3D),
@@ -211,6 +215,7 @@ object Composed:
 
     var state = interpret(examples(0)(1), examples(0)(2))
     var currentOriginText = examples(0)(1)
+    var currentText = examples(0)(1)
 
     def setActiveExample(text: String, viewMode: View) =
       currentOriginText = text
@@ -236,6 +241,39 @@ object Composed:
       state.editor.runFromText()
     )
 
+    val rectangleButton = InputButton("drawRectangle")
+    rectangleButton.listen(() => 
+      rectangleButton.showPopUp(state.editor, countObject, () => {
+        val newText = state.editor.getText() + "\n" + rectangleButton.programText
+        setActiveExample(newText, renderMode)
+        state.editor.runWithText(newText, false)
+        currentText = newText
+        countObject = countObject + 1
+      })
+    )
+
+    val circleButton = InputButton("drawCircle")
+    circleButton.listen(() => 
+      circleButton.showPopUp(state.editor, countObject, () => {
+        val newText = state.editor.getText() + "\n" + circleButton.programText
+        setActiveExample(newText, renderMode)
+        state.editor.runWithText(newText, false)
+        currentText = newText
+        countObject = countObject + 1
+      })
+    )
+
+    val extrudeButton = InputButton("extrude3D")
+    extrudeButton.listen(() => 
+      extrudeButton.showPopUp(state.editor, countObject, () => {
+        val newText = state.editor.getText() + "\n" + extrudeButton.programText
+        setActiveExample(newText, renderMode)
+        state.editor.runWithText(newText, false)
+        currentText = newText
+        countObject = countObject + 1
+      })
+    )
+
     val runBenchmark = GenericButton("Run Benchmarks")
     runBenchmark.listen(() =>
       state.renderer.dispose()
@@ -255,6 +293,9 @@ object Composed:
         resetProgram.button,
         centerView.button,
         runButton.button,
+        rectangleButton.button,
+        circleButton.button,
+        extrudeButton.button,
         runBenchmark.button
       )
     )
@@ -269,6 +310,7 @@ object Composed:
           e.preventDefault()
           e.stopPropagation()
     )
+    //window.addEventListener("pointermove", (event: MouseEvent) => state.renderer.onPointerMove(event));
 
 extension (vars: Vector[Var])
   def display() =

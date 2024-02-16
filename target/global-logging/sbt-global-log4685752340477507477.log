@@ -1,0 +1,29 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(__runWatch console0, Some(1c655fde-702b-483f-a158-33255d271242), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(sbtStashOnFailure, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(__preWatch console0, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(fastOptJS/webpack, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: elodinJS / Compile / fastOptJS / webpack[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 2 Scala sources to /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing-web/js/target/scala-3.2.1/classes ...[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E052] Type Error: /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing-web/js/src/main/scala/elodin/opt/execute.scala:641:11 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m641 |[0m      text = (currentText + text)[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m    |[0m      ^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0m      Reassignment to val text[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m-- [E129] Potential Issue Warning: /Users/shana/Desktop/delete/Research/lineage-based-cad-referencing-web/js/src/main/scala/elodin/opt/execute.scala:639:34 [0m[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m639 |[0m      [33mif[0m text == currentText [33mthen[0m [31mfalse[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m    |[0m                                  ^^^^^[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m    |[0mA pure expression does nothing in statement position; you may be omitting necessary parentheses[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m    |[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m    |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[0mdebug[0m] [0m[0mGlobal IR cache stats: reused: 0 -- invalidated: 0 -- trees read: 0[0m
+[0m[[0m[31merror[0m] [0m[0m(elodinJS / Compile / [31mcompileIncremental[0m) Compilation failed[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 0 s, completed Nov 29, 2023, 2:29:41 PM[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(resumeFromFailure, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(sbtPopOnFailure, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(__postWatch console0, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(resumeFromFailure, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(__waitWatch console0, None, None)[0m

@@ -589,7 +589,7 @@ class DynamicExecutor(text: String, wrapper: HTMLElement = document.body, render
   var currentText = ""
   var parameters = Vector[Var]()
   var programBody = Seq[AST]()
-  updateProgram(text)
+  updateProgram(text, true)
 
   var DEBUG_DRAW = false
 
@@ -631,19 +631,23 @@ class DynamicExecutor(text: String, wrapper: HTMLElement = document.body, render
         setError(text, ErrorType.ParseError)
         None
 
-  def updateProgram(text: String): Boolean =
-    if text == currentText then false
-    else
-      tryParse(text) match
-        case Some(Seq(paramBlock, body*)) =>
-          parameters = paramBlock match
-            case ParameterStmt(ps) =>
-              ps.map((name, bounds) => Var(bounds.mid, name, bounds.min, bounds.max)).toVector
-            case _ => throw new Exception("Missing parameter block")
-          programBody = body
-          currentText = text
-          true
-        case _ => false
+  def updateProgram(text: String, user: Boolean): Boolean =
+    print("UPDATE PROGRAM TEXT " + text)
+    var newText = text
+    if (user)
+      if (newText == currentText) then false 
+
+    tryParse(newText) match
+      case Some(Seq(paramBlock, body*)) =>
+        parameters = paramBlock match
+          case ParameterStmt(ps) =>
+            ps.map((name, bounds) => Var(bounds.mid, name, bounds.min, bounds.max)).toVector
+          case _ => throw new Exception("Missing parameter block")
+        programBody = body
+        currentText = newText
+        true
+      case _ => 
+        false
 
   def execute(input: Vector[Var])(using renderContext: Renderer, cc: ConstraintContext) =
     import Interpreter.*

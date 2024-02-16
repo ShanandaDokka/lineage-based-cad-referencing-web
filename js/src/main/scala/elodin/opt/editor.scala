@@ -77,17 +77,21 @@ class DynamicEditor(
 
   var currentParameters: Vector[Var] = null
   var currentOutputs: ExecutionStats = null
-
+ 
   var displayContainer = div("program-container")
   val displayedParams = ParameterDisplay(displayContainer, compute)
     .patchParameters(program.parameters)
 
   val getText = program.sourceText
-    .map(displayEditableCode(displayContainer)(runWithText, resized))
+    .map(displayEditableCode(displayContainer)(runWithText(_, user = true), resized))
     .get
 
-  def runWithText(newText: String) =
-    if program.updateProgram(newText) then
+  def runWithText(newText: String, user: Boolean) =
+    if !user then
+      program.updateProgram(newText, false)
+      displayedParams.patchParameters(program.parameters)
+      compute(displayedParams.currentValues)
+    else if program.updateProgram(newText, true) then
       // console.log(program.programBody.map(_.toString).mkString("\n"))
       displayedParams.patchParameters(program.parameters)
       compute(displayedParams.currentValues)
@@ -96,7 +100,7 @@ class DynamicEditor(
   def resetParameters() =
     compute(program.parameters)
 
-  def runFromText() = runWithText(getText())
+  def runFromText() = runWithText(getText(), true)
 
   wrapper(displayContainer)
   compute(displayedParams.currentValues)

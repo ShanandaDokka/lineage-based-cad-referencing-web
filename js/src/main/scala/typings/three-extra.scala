@@ -15,7 +15,6 @@ import org.scalajs.dom.raw.{WebGLShader, WebGLFramebuffer}
 import org.scalajs.dom.experimental.gamepad.*
 import scalajs.js.typedarray.*
 
-import typings.three.*
 import typings.three.helpers.*
 import typings.three.textures.*
 import typings.three.objects.*
@@ -40,6 +39,10 @@ import typings.three.math.interpolants.*
 import typings.three.audio.*
 import typings.three.lights.*
 import typings.three.*
+
+@js.native
+@JSImport("three", JSImport.Namespace)
+object Three extends js.Object
 
 @js.native
 @JSImport("three/examples/jsm/lines/Line2", "Line2")

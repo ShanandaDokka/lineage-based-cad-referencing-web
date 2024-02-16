@@ -21,6 +21,7 @@ import ThreeContext.*
 import typings.three.objects
 import typings.three.materials
 import typings.three.math.{Box3, Line3}
+import typings.three.core.*
 import typings.three.extras.core.{Curve, Shape}
 import typings.three.materials.{LineBasicMaterial, LineDashedMaterial, MeshLambertMaterial}
 import typings.three.geometries.{ExtrudeGeometry, EdgesGeometry, ExtrudeGeometryOptions}
@@ -677,10 +678,81 @@ class Renderer3D(container: HTMLElement, view: View) extends Renderer:
   var num_segments = 0
   var num_faces = 0
 
+  // ******* RAYCASTING ********
+  val raycaster = new Raycaster();
+  val pointer = new Vector2();
+
+  var highlightedObjects: Set[Mesh[BufferGeometry, Material]] = Set()
+  var originalColors: Map[Mesh[BufferGeometry, Material], typings.three.math.Color] = Map.empty
+
+  def highlightObject(mesh: Mesh[BufferGeometry, Material]): Unit = {
+    console.log("IN HIGHLIGHTED FUNCTION")
+    originalColors.get(mesh) match {
+      case Some(_) => // Object already highlighted
+      case None =>
+        originalColors = originalColors + (mesh -> Color(0x000000))
+        mesh.material.asInstanceOf[typings.three.materials.MeshBasicMaterial].color.set(0xffff00)
+        highlightedObjects = highlightedObjects + mesh
+        console.log("SIZE SHOULD BE UPDATED " + highlightedObjects.size)
+    }
+  }
+
+  def resetHighlight(): Unit = {
+    console.log("IN RESET HIGHLIGHT FUNCTION")
+    console.log("size of highlightedObjects is " + highlightedObjects.size)
+    for (mesh <- highlightedObjects) {
+      console.log("RESETTING COLOR")
+      originalColors.get(mesh).foreach { color =>
+        mesh.material.asInstanceOf[typings.three.materials.MeshBasicMaterial].color.set(color)
+      }
+    }
+    highlightedObjects = Set()
+    originalColors = Map.empty
+  }
+
+  var isObjectHighlighted = false
+
+  document.addEventListener("mousemove", (event: MouseEvent) => {
+    pointer.x = (event.clientX / width) * 2 - 1;
+    pointer.y = -(event.clientY / height) * 2 + 1;
+
+    console.log("COORDINATES ARE " + pointer.x + pointer.y)
+
+    render()
+  });
+
   def render() =
     // Iterate through all renderObjects
     for r <- currentElements do for obj <- r.objs do scene.add(obj)
     if numRenders == 0 then centerView()
+
+    raycaster.setFromCamera(pointer.asInstanceOf[typings.three.core.AnonObject17], camera);
+
+    val meshObjects = currentElements.flatMap(_.objs)
+    val filteredMeshObjects = meshObjects.collect {
+      case obj: Mesh[BufferGeometry, Material] => obj
+    }
+
+    val intersects = raycaster.intersectObjects(js.Array(filteredMeshObjects.toArray: _*));
+    console.log("intersecting this many: " + intersects.size)
+
+    if (intersects.nonEmpty) {
+      val mesh = intersects.head.`object`.asInstanceOf[Mesh[BufferGeometry, Material]]
+
+      if (!isObjectHighlighted) {
+        console.log("highlighting object not already highlighted")
+        resetHighlight()
+        highlightObject(mesh)
+        isObjectHighlighted = true
+      }
+    } else {
+      if (isObjectHighlighted) {
+        resetHighlight()
+        isObjectHighlighted = false
+      }
+    }
+
+    renderer.render( scene, camera );
 
   def drawScene() =
     renderer.render(scene, camera)
@@ -698,12 +770,6 @@ class Renderer3D(container: HTMLElement, view: View) extends Renderer:
     renderer.setSize(width, height)
     for listener <- resizeListeners do listener(width, height)
     drawScene()
-
-  render()
-  renderer.render(scene, camera)
-  window.addEventListener("resize", _ => onWindowResize())
-  controls.addEventListener("change", _ => drawScene())
-  drawScene()
 
   val disposeCallbacks = Buffer[() => Unit]()
   def dispose() =
@@ -731,6 +797,12 @@ class Renderer3D(container: HTMLElement, view: View) extends Renderer:
       document.body.removeChild(mouseText)
       document.removeEventListener("mousemove", listener)
     )
+
+  render()
+  renderer.render(scene, camera)
+  window.addEventListener("resize", _ => onWindowResize())
+  controls.addEventListener("change", _ => drawScene())
+  drawScene()
 
   def draw(elements: Seq[(Renderable, Seq[Style])]) =
     val (w, h) = (width, height)
