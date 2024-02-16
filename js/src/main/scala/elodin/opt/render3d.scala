@@ -48,7 +48,14 @@ import elodin.geometry.*
 
 type Renderable = Point | Edge | Polygon | Region2D | Solid | Vertex3D | Edge3D | Face3D
 
-class RenderObject(val objs: Seq[Object3D])
+case class UserData(name: String, value: String)
+
+class RenderObject(val objs: Seq[Object3D]) {
+  objs.foreach(obj => {
+    val userData = new UserData("", "")
+    obj.userData = userData.asInstanceOf[typings.three.core.AnonObject24]
+  })
+}
 
 enum View { case View2D; case View3D }
 import View.*
@@ -58,13 +65,24 @@ extension (ls: Seq[Int])
     ls.reduceLeftOption(_ + _).getOrElse((0))
 
 object RenderObject:
+  // Updated apply methods to add .userData field
   @targetName("renderObjectSingle")
-  def apply(objs: Object3D*) =
-    new RenderObject(objs)
+  def apply(objs: Object3D*)(name: String, value: String): RenderObject = {
+    val renderObject = new RenderObject(objs)
+    val userData = new UserData(name, value)
+    objs.foreach(obj => obj.userData = userData.asInstanceOf[typings.three.core.AnonObject24])
+    renderObject
+  }
 
   @targetName("renderObjectSeq")
-  def apply(objs: Seq[Object3D]) =
-    new RenderObject(objs)
+  def apply(objs: Seq[Object3D], names: Seq[String], values: Seq[String]): RenderObject = {
+    val renderObject = new RenderObject(objs)
+    objs.zip(names.zip(values)).foreach {
+      case (obj, (name, value)) =>
+        obj.userData = new UserData(name, value).asInstanceOf[typings.three.core.AnonObject24]
+    }
+    renderObject
+  }
 
   given Ordering[Vector3] with
     def compare(a: Vector3, b: Vector3): Int =
@@ -561,16 +579,16 @@ object RenderObject:
       for mesh <- originMeshes do applyTransformsToMesh(mesh, transformMatrix)
       originMeshes
 
-    r match
-      case p: Point     => RenderObject(drawPoint(p, s))
-      case e: Edge      => RenderObject(drawEdge(e, s))
-      case p: Polygon   => RenderObject(drawPolygon(p, s))
-      case r: Region2D  => RenderObject(drawRegion(r, s))
-      case e: Solid     => RenderObject(drawSolid(e, s))
-      case p3: Vertex3D => RenderObject(drawVertex3(p3, s))
-      case e3: Edge3D   => RenderObject(drawEdge3(e3, s))
-      case f3: Face3D   => RenderObject(drawFace3(f3, s))
-
+    r match {
+      case p: Point     => RenderObject(drawPoint(p, s), Seq.empty, Seq.empty)
+      case e: Edge      => RenderObject(drawEdge(e, s), Seq.empty, Seq.empty)
+      case p: Polygon   => RenderObject(drawPolygon(p, s), Seq.empty, Seq.empty)
+      case r: Region2D  => RenderObject(drawRegion(r, s), Seq.empty, Seq.empty)
+      case e: Solid     => RenderObject(drawSolid(e, s), Seq.empty, Seq.empty)
+      case p3: Vertex3D => RenderObject(drawVertex3(p3, s), Seq.empty, Seq.empty)
+      case e3: Edge3D   => RenderObject(drawEdge3(e3, s), Seq.empty, Seq.empty)
+      case f3: Face3D   => RenderObject(drawFace3(f3, s), Seq.empty, Seq.empty)
+    }
 trait Renderer:
   val willDraw: Boolean
   var renderEdges: Boolean
@@ -711,6 +729,7 @@ class Renderer3D(container: HTMLElement, view: View) extends Renderer:
   }
 
   var isObjectHighlighted = false
+  var isMouseClicked = false
 
   document.addEventListener("mousemove", (event: MouseEvent) => {
     pointer.x = (event.clientX / width) * 2 - 1;
@@ -718,7 +737,35 @@ class Renderer3D(container: HTMLElement, view: View) extends Renderer:
 
     console.log("COORDINATES ARE " + pointer.x + pointer.y)
 
-    render()
+    if (!isMouseClicked) {
+      render()
+    }
+  });
+
+  document.addEventListener("click", (event: MouseEvent) => {
+    isMouseClicked = !isMouseClicked
+
+    if (isMouseClicked) {
+      // Handle click event if the mouse is clicked
+      pointer.x = (event.clientX / width) * 2 - 1;
+      pointer.y = -(event.clientY / height) * 2 + 1;
+
+      raycaster.setFromCamera(pointer.asInstanceOf[typings.three.core.AnonObject17], camera);
+
+      val meshObjects = currentElements.flatMap(_.objs)
+      val filteredMeshObjects = meshObjects.collect {
+        case obj: Mesh[BufferGeometry, Material] => obj
+      }
+
+      val intersects = raycaster.intersectObjects(js.Array(filteredMeshObjects.toArray: _*));
+
+      if (intersects.nonEmpty) {
+        val mesh = intersects.head.`object`.asInstanceOf[Mesh[BufferGeometry, Material]]
+        resetHighlight()
+        highlightObject(mesh)
+        render()
+      }
+    }
   });
 
   def render() =
